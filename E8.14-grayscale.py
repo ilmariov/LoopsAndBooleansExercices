@@ -13,7 +13,7 @@ def openPicture():
     widthPic = picture.getWidth()
     placedPic = Image(Point(widthPic/2, heightPic/2), filename)
 
-    window = GraphWin('Grayscaling', widthPic, heightPic+30)
+    window = GraphWin('Grayscaling', widthPic, heightPic+44)
     placedPic.draw(window)
     win.close()
 
@@ -21,7 +21,7 @@ def openPicture():
 
 def main():
     win, widthPic, heightPic, picture, filename = openPicture()
-    steps = Text(Point(widthPic/2, heightPic + 15), 'Click to grayscale')
+    steps = Text(Point(widthPic/2, heightPic + 22), 'Click to grayscale')
     steps.draw(win)
     win.getMouse()
 
@@ -35,14 +35,31 @@ def main():
         picture.draw(win)
     
     steps.undraw()
-    steps = Text(Point(widthPic/2, heightPic + 15), 'Click to save to a file image')
+    steps = Text(Point(widthPic/2, heightPic + 11), 'Enter "y" to save the image or just click to exit')
     steps.draw(win)
+    save = Entry(Point(widthPic/2, heightPic + 33), 3)
+    save.draw(win)
     win.getMouse()
+    answer = save.getText()
 
-    picture.save('(grayscaled) {}'.format(filename))
-    steps.undraw()
-    steps = Text(Point(widthPic/2, heightPic + 15), 'Click to exit').draw(win)
-    win.getMouse()
-    win.close()
+    while answer != 'y' and answer != 'Y' and answer != '':
+        steps.undraw()
+        steps = Text(Point(widthPic/2, heightPic + 11), 'Invalid entry. Enter "y" to save or click to exit').draw(win)
+        save.undraw()
+        save.setText('')
+        save.draw(win)
+        win.getMouse()
+        answer = save.getText()
+    
+    if answer == '':
+        win.close()
+    else:
+        picture.save('(grayscaled) {}'.format(filename))
+        steps.undraw()
+        save.undraw()
+        steps = Text(Point(widthPic/2, heightPic + 22), 'Image saved, click again to exit').draw(win)
+        win.getMouse()
+        win.close()
+
 
 main()
