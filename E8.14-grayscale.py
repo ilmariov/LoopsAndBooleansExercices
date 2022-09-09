@@ -1,4 +1,3 @@
-from fileinput import filename
 from graphics import *
 
 def openPicture():
