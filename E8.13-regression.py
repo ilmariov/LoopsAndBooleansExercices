@@ -35,13 +35,22 @@ def getLimits(width, height):
     y2 = -height*(8/20)
     return (x1, y1, x2, y2)
 
+def draw_line(win, width, height, x_avg, y_avg, m):
+    xLeftLimit = int((-width*19)//40)
+    xRightLimit = int((width*19)//40)
+    for i in range (xLeftLimit, xRightLimit, 3):
+            j = y_avg + (m * (i - x_avg))
+            if j > -height*(8/20):
+                line_dots = Circle(Point(i, j), 1)
+                line_dots.setOutline('green')
+                line_dots.draw(win)
+
 def main():
-    width = float(input('Enter window width: '))
-    height = float(input('Enter window height: '))
+    width = 800 #float(input('Enter window width: '))
+    height = 500 #float(input('Enter window height: '))
     win = cartesian_plane(width, height)
-    button(win, width, height)
-    #limits for the exit button
-    x_left, y_botton, x_right, y_top = getLimits(width, height)
+    button(win, width, height)    
+    x_left, y_botton, x_right, y_top = getLimits(width, height) #limits for the exit button
     click = win.getMouse()
     x = click.getX()
     y = click.getY()
@@ -70,12 +79,9 @@ def main():
     den =  sum_den - (n * x_avg * x_avg)
     if den != 0:
         m = num / den
-
-    for i in range (-295, 295, 3):
-        j = y_avg + (m * (i - x_avg))
-        line_dots = Circle(Point(i, j), 1)
-        line_dots.setOutline('green')
-        line_dots.draw(win)
+        draw_line(win, width, height, x_avg, y_avg, m)
+    else:
+        draw_line(win, width, height, x_avg, y_avg, 0)
     
     win.getMouse()
     win.close()
