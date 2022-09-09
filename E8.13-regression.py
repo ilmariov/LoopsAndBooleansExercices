@@ -44,7 +44,7 @@ def draw_line(win, width, height, x_avg, y_avg, m):
                 line_dots = Circle(Point(i, j), 1)
                 line_dots.setOutline('green')
                 line_dots.draw(win)
-
+                
 def main():
     width = 800 #float(input('Enter window width: '))
     height = 500 #float(input('Enter window height: '))
