@@ -1,7 +1,7 @@
 from graphics import *
 
 def openPicture():
-    win = GraphWin('Grayscaling', 400, 100)
+    win = GraphWin('Color Negative', 400, 100)
     Text(Point(200,35), 'Enter image filename, then click:').draw(win)
     picName = Entry(Point(200,75), 10)
     picName.setText('.PPM')
@@ -13,7 +13,7 @@ def openPicture():
     widthPic = picture.getWidth()
     placedPic = Image(Point(widthPic/2, heightPic/2), filename)
 
-    window = GraphWin('Grayscaling', widthPic, heightPic+44)
+    window = GraphWin('Color Negative', widthPic, heightPic+44)
     placedPic.draw(window)
     win.close()
 
@@ -21,7 +21,7 @@ def openPicture():
 
 def main():
     win, widthPic, heightPic, picture, filename = openPicture()
-    steps = Text(Point(widthPic/2, heightPic + 22), 'Click to grayscale')
+    steps = Text(Point(widthPic/2, heightPic + 22), 'Click to convert image to its color negative')
     steps.draw(win)
     win.getMouse()
 
@@ -29,8 +29,7 @@ def main():
         for j in range(0, widthPic):
             #print(j, i)
             r, g, b = picture.getPixel(j, i)
-            brightness = int(round(0.299*r + 0.587*g + 0.114*b))
-            picture.setPixel(j, i, color_rgb(brightness, brightness, brightness))
+            picture.setPixel(j, i, color_rgb(255-r, 255-g, 255-b))
         picture.undraw()
         picture.draw(win)
     
@@ -54,7 +53,7 @@ def main():
     if answer == '':
         win.close()
     else:
-        picture.save('(grayscaled) {}'.format(filename))
+        picture.save('(neg-colored) {}'.format(filename))
         steps.undraw()
         save.undraw()
         steps = Text(Point(widthPic/2, heightPic + 22), 'Image saved, click again to exit').draw(win)
